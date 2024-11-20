@@ -94,9 +94,15 @@ namespace PeajeRamirez
         //Busqueda de un registro mediante marca o patente
         private void btnBuscar_Click(object sender, EventArgs e)
         {
+            //Verificamoes que el campo de búsqueda no esté vacio
+            if (string.IsNullOrWhiteSpace(txtbBuscar.Text))
+            {
+                MessageBox.Show("Por favor, ingrese una patente o marca para buscar");
+                return;
+            }
             string query = "SELECT * FROM vehiculos WHERE patente LIKE @Buscar OR marca LIKE @buscar";
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@Buscar", "%" + txtbBuscar.Text + "%");
+            command.Parameters.AddWithValue("@Buscar", txtbBuscar.Text);
             connection.Open();
             MySqlDataReader reader = command.ExecuteReader();
             DataTable dataTable = new DataTable();
@@ -119,11 +125,18 @@ namespace PeajeRamirez
             }
         }
 
-        //Cargamos los campos con los registros de la celda seleccionada en el DataGrid
+        //EVENTO CLICK CELDA DEL DATAG - DESACTIVA INGRESO - ACTIVA BOTON ACTUALIZAR - ACTIVA BOTON ELIMINAR 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
+
+                btnIngresar.Enabled = false;
+                btnIngresar.Visible = false;
+                btnEliminar.Visible = true;
+                btnEliminar.Enabled = true;
+
+
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
                 txtbMarca.Text = row.Cells["marca"].Value.ToString();
                 txtbModelo.Text = row.Cells["modelo"].Value.ToString();
@@ -188,10 +201,15 @@ namespace PeajeRamirez
                 {
                     MessageBox.Show("Por favor, seleccione un registro para actualizar.");
                 }
+
+                btnIngresar.Enabled = true;
+                btnIngresar.Visible = true;
+                btnEliminar.Enabled = false;
+                btnEliminar.Visible = false;
             }
         }
 
-        //Boton Volver (Muestra grilla completa nuevamente luego de una busqueda)
+        //Boton Volver (Muestra grilla completa nuevamente luego de una busqueda/ Nos habilita una busqueda nueva)
         private void btnVolver_Click(object sender, EventArgs e)
         {
             txtbBuscar.Clear();
@@ -206,18 +224,58 @@ namespace PeajeRamirez
         }
 
 
-
+        //SALIR DE LA TERMINAL
         private void btnSalir_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             this.dateTimeLabel.Text = DateTime.Now.ToString("dd/M/yyyy HH:mm:ss");
         }
 
-        
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            //Verifica que haya una celda seleccionada
+            if(dataGridView1.SelectedCells.Count > 0)
+            {
+                //confirma eliminacion
+                DialogResult result = MessageBox.Show("Seguro que desea eliminar el registro?.", "Confirmación", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    int selectedRowIndex= dataGridView1.SelectedCells[0].RowIndex;
+                    int selectCellId = (int)dataGridView1.Rows[selectedRowIndex].Cells["Id"].Value;
+
+                    //Eliminamos el registro de la DB
+                    string query = "DELETE FROM vehiculos WHERE Id = @id";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@id", selectCellId);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                    LoadData();
+
+                    //Limpiamos campos
+                    txtbMarca.Clear();
+                    txtbModelo.Clear();
+                    txtbPatente.Clear();
+                    txtbPersonas.Clear();
+                    txtbCarril.Clear();
+
+                    //Activo nuevamente boton ingresar
+                    btnIngresar.Visible = true;
+                    btnIngresar.Enabled = true;
+                    btnEliminar.Visible = false;
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un registro para eliminar");
+            }
+        }
     }
 }

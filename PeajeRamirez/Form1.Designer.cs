@@ -47,6 +47,7 @@
             label6 = new Label();
             btnVolver = new Button();
             groupBox5 = new GroupBox();
+            btnEliminar = new Button();
             btnActualizar = new Button();
             dateTimePicker1 = new DateTimePicker();
             label12 = new Label();
@@ -256,11 +257,25 @@
             groupBox5.Controls.Add(label9);
             groupBox5.Controls.Add(label8);
             groupBox5.Controls.Add(label7);
+            groupBox5.Controls.Add(btnEliminar);
             groupBox5.Location = new Point(30, 181);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new Size(451, 383);
             groupBox5.TabIndex = 7;
             groupBox5.TabStop = false;
+            // 
+            // btnEliminar
+            // 
+            btnEliminar.BackColor = Color.Red;
+            btnEliminar.Font = new Font("Franklin Gothic Medium Cond", 11.25F, FontStyle.Bold | FontStyle.Italic);
+            btnEliminar.Location = new Point(268, 274);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(159, 60);
+            btnEliminar.TabIndex = 19;
+            btnEliminar.Text = "ELIMINAR INGRESO";
+            btnEliminar.UseVisualStyleBackColor = false;
+            btnEliminar.Visible = false;
+            btnEliminar.Click += btnEliminar_Click;
             // 
             // btnActualizar
             // 
@@ -492,5 +507,6 @@
         private DateTimePicker dateTimePicker1;
         private Button btnActualizar;
         private Button btnVolver;
+        private Button btnEliminar;
     }
 }
