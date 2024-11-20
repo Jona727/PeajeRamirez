@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
-    Microsoft ResX Schema
+    Microsoft ResX Schema 
 
     Version 2.0
 
@@ -48,7 +48,7 @@
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
@@ -117,4 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        f0qJlFYWEE8AAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>
